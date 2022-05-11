@@ -12,7 +12,7 @@
   "devDependencies": {
     "nodemon": "^2.0.15"
   },
-  "name": "trio-notesapp",
+  "name": "evme",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
