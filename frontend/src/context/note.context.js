@@ -2,7 +2,7 @@ import { useToast } from "@chakra-ui/react";
 import { createContext, useState } from "react";
 
 const NoteContext = createContext();
-const host = "http://localhost:4000";
+const host = "https://evme.herokuapp.com";
 
 export const NoteProvider = ({ children }) => {
   const toast = useToast();
