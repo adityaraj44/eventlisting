@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import "flatpickr/dist/themes/material_green.css";
 import {
   Container,
   Heading,
@@ -29,7 +30,7 @@ const Homepage = () => {
   const toast = useToast();
   const noteContext = useContext(NoteContext);
   const { addNote } = noteContext;
-  document.title = "noteme - Add Note";
+  document.title = "evme - Add Event";
   const themeContext = useContext(ThemeContext);
   const {
     nltheme,
@@ -41,13 +42,15 @@ const Homepage = () => {
   const [note, setNote] = useState({
     title: "",
     noteDescription: "",
+    inDate: null,
+    outDate: null,
   });
 
   const narutoTheme = nltheme || ndtheme;
   const darkTheme = ndtheme || ddtheme;
 
   const isMobile = useMediaQuery("(max-width: 768px)");
-  // console.log(isMobile);
+
   const context = useContext(FormFieldContext);
   const {
     isValidTitle,
@@ -71,6 +74,21 @@ const Homepage = () => {
     });
   };
 
+  const onInDateChange = (e) => {
+    setNote({
+      ...note,
+      inDate: e.target.value,
+      outDate: null,
+    });
+  };
+
+  const onOutDateChange = (e) => {
+    setNote({
+      ...note,
+      outDate: e.target.value,
+    });
+  };
+
   const onKeyTitleCapture = (e) => {
     validateTitle(note.title);
   };
@@ -84,10 +102,15 @@ const Homepage = () => {
     setIsLoading(true);
     e.preventDefault();
 
-    if (note.title.length < 1 || note.noteDescription.length < 1) {
+    if (
+      note.title.length < 1 ||
+      note.noteDescription.length < 1 ||
+      note.inDate === null ||
+      note.outDate === null
+    ) {
       toast({
         title: "Error",
-        description: "Title or note description cannot be empty",
+        description: "Fields cannot be empty",
         status: "error",
         duration: 2000,
         isClosable: true,
@@ -100,6 +123,8 @@ const Homepage = () => {
       setNote({
         title: "",
         noteDescription: "",
+        inDate: null,
+        outDate: null,
       });
     }
   };
@@ -131,7 +156,7 @@ const Homepage = () => {
               ADD
             </Heading>
           </span>{" "}
-          A NOTE
+          AN EVENT
         </Heading>
         <Divider />
       </Box>
@@ -158,7 +183,7 @@ const Homepage = () => {
                 required
                 onChange={onTitleChange}
                 variant={darkTheme ? "outline" : "filled"}
-                placeholder="Recipe to make ramen noodles"
+                placeholder="An event title"
                 id="title"
                 name="title"
                 type="text"
@@ -190,9 +215,68 @@ const Homepage = () => {
               fontWeight="semibold"
               color={darkTheme ? "white" : "naruto.black"}
               mb="4"
+              htmlFor="inDate"
+            >
+              Start Date
+            </FormLabel>
+
+            <InputGroup>
+              <Input
+                fontWeight="light"
+                size="md"
+                color={darkTheme ? "gray.300" : "naruto.black"}
+                focusBorderColor={narutoTheme ? "naruto.yellow" : "demon.pink"}
+                onChange={onInDateChange}
+                variant={darkTheme ? "outline" : "filled"}
+                id="inDate"
+                name="inDate"
+                type="date"
+              />
+            </InputGroup>
+            {/* <Flatpickr
+              data-enable-time
+              value={note.inDate}
+              onChange={onInDateChange}
+            /> */}
+          </FormControl>
+          <FormControl mb="10" isRequired>
+            <FormLabel
+              fontWeight="semibold"
+              color={darkTheme ? "white" : "naruto.black"}
+              mb="4"
+              htmlFor="outDate"
+            >
+              End Date
+            </FormLabel>
+
+            <InputGroup>
+              <Input
+                fontWeight="light"
+                size="md"
+                color={darkTheme ? "gray.300" : "naruto.black"}
+                focusBorderColor={narutoTheme ? "naruto.yellow" : "demon.pink"}
+                onChange={onOutDateChange}
+                variant={darkTheme ? "outline" : "filled"}
+                id="outDate"
+                value={note.outDate != null ? note.outDate : "0000-00-00"}
+                name="outDate"
+                type="date"
+              />
+            </InputGroup>
+            {/* <Flatpickr
+              data-enable-time
+              value={note.outDate}
+              onChange={onOutDateChange}
+            /> */}
+          </FormControl>
+          <FormControl mb="10" isRequired>
+            <FormLabel
+              fontWeight="semibold"
+              color={darkTheme ? "white" : "naruto.black"}
+              mb="4"
               htmlFor="noteDescription"
             >
-              Note
+              Description
             </FormLabel>
             <InputGroup>
               <Textarea
@@ -206,7 +290,7 @@ const Homepage = () => {
                 name="noteDescription"
                 id="noteDescription"
                 variant={darkTheme ? "outline" : "filled"}
-                placeholder="Buy ingredients, then..."
+                placeholder="This event is organized by ...."
                 onKeyUpCapture={onKeyDescCapture}
                 onBlur={() => setIsValidNoteDesc(null)}
                 rows={5}
@@ -227,7 +311,7 @@ const Homepage = () => {
             </InputGroup>
             {isValidNoteDesc === false && (
               <FormHelperText mt={4} color="naruto.red">
-                Note required
+                Description required
               </FormHelperText>
             )}
             <ButtonGroup
@@ -252,7 +336,7 @@ const Homepage = () => {
                 }}
                 rightIcon={<SmallAddIcon fontSize="lg" />}
               >
-                Add note
+                Add event
               </Button>
               <Button
                 fontWeight="medium"
@@ -260,6 +344,8 @@ const Homepage = () => {
                   setNote({
                     title: "",
                     noteDescription: "",
+                    inDate: null,
+                    outDate: null,
                   })
                 }
                 mt="10"

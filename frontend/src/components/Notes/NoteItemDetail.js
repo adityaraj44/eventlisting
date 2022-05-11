@@ -59,7 +59,7 @@ const NoteItemDetail = () => {
   } = noteContext;
   const params = useParams();
 
-  document.title = "noteme - Note Detail";
+  document.title = "evme - Event Detail";
   const themeContext = useContext(ThemeContext);
   const {
     nltheme,
@@ -90,6 +90,8 @@ const NoteItemDetail = () => {
   const [editedNote, setEditedNote] = useState({
     title: "",
     noteDescription: "",
+    inDate: "",
+    outDate: "",
   });
   useEffect(() => {
     getSingleNote(params.id);
@@ -110,6 +112,21 @@ const NoteItemDetail = () => {
     });
   };
 
+  const onInDateChange = (e) => {
+    setEditedNote({
+      ...editedNote,
+      inDate: e.target.value,
+      outDate: "",
+    });
+  };
+
+  const onOutDateChange = (e) => {
+    setEditedNote({
+      ...editedNote,
+      outDate: e.target.value,
+    });
+  };
+
   const onKeyTitleCapture = (e) => {
     validateTitle(editedNote.title);
   };
@@ -123,10 +140,15 @@ const NoteItemDetail = () => {
   const handleSubmit = async (e) => {
     setEditLoading(true);
     e.preventDefault();
-    if (editedNote.title.length < 1 || editedNote.noteDescription.length < 1) {
+    if (
+      editedNote.title.length < 1 ||
+      editedNote.noteDescription.length < 1 ||
+      editedNote.inDate === "" ||
+      editedNote.outDate === ""
+    ) {
       toast({
         title: "Error",
-        description: "Title or note description cannot be empty",
+        description: "Fields cannot be empty",
         status: "error",
         duration: 2000,
         isClosable: true,
@@ -144,7 +166,7 @@ const NoteItemDetail = () => {
   const handleDelete = async () => {
     await deleteNote(params.id);
 
-    history.push("/notes");
+    history.push("/events");
   };
 
   const onEditClick = () => {
@@ -153,6 +175,8 @@ const NoteItemDetail = () => {
     setEditedNote({
       title: singleNote.title,
       noteDescription: singleNote.noteDescription,
+      inDate: singleNote.inDate,
+      outDate: singleNote.outDate,
     });
   };
 
@@ -200,7 +224,7 @@ const NoteItemDetail = () => {
                   as="h1"
                   color={narutoTheme ? "naruto.red" : "demon.green"}
                 >
-                  Note Title
+                  Event Title
                 </Heading>
                 <Divider />
                 <Text mt={3} color={darkTheme ? "white" : "naruto.black"}>
@@ -214,7 +238,7 @@ const NoteItemDetail = () => {
                   as="h1"
                   color={narutoTheme ? "naruto.red" : "demon.green"}
                 >
-                  Note Body
+                  Event Body
                 </Heading>
 
                 <Text
@@ -228,6 +252,47 @@ const NoteItemDetail = () => {
                 </Text>
               </Box>
               <Divider my={4} />
+              <Box mt={10}>
+                <Heading
+                  size="md"
+                  mb="2"
+                  as="h1"
+                  color={narutoTheme ? "naruto.red" : "demon.green"}
+                >
+                  Event Start Date
+                </Heading>
+
+                <Text
+                  style={{
+                    whiteSpace: "pre-wrap",
+                  }}
+                  mt={3}
+                  color={darkTheme ? "white" : "naruto.black"}
+                >
+                  {singleNote.inDate}
+                </Text>
+              </Box>
+              <Divider my={4} />
+              <Box mt={10}>
+                <Heading
+                  size="md"
+                  mb="2"
+                  as="h1"
+                  color={narutoTheme ? "naruto.red" : "demon.green"}
+                >
+                  Event End Date
+                </Heading>
+
+                <Text
+                  style={{
+                    whiteSpace: "pre-wrap",
+                  }}
+                  mt={3}
+                  color={darkTheme ? "white" : "naruto.black"}
+                >
+                  {singleNote.outDate}
+                </Text>
+              </Box>
               <Box display="block" textAlign="center">
                 <Badge
                   bgColor={narutoTheme ? "naruto.blue" : "demon.pink"}
@@ -306,7 +371,7 @@ const NoteItemDetail = () => {
               borderColor={darkTheme ? "gray.600" : ""}
             >
               <ModalHeader color={narutoTheme ? "naruto.red" : "demon.green"}>
-                Edit Note
+                Edit Event
               </ModalHeader>
               <ModalCloseButton />
               <ModalBody my="2">
@@ -333,7 +398,7 @@ const NoteItemDetail = () => {
                         required
                         onChange={onTitleChange}
                         variant={darkTheme ? "outline" : "filled"}
-                        placeholder="Recipe to make ramen noodles"
+                        placeholder="An event title"
                         id="title"
                         name="title"
                         type="text"
@@ -367,9 +432,69 @@ const NoteItemDetail = () => {
                       fontWeight="semibold"
                       color={darkTheme ? "white" : "naruto.black"}
                       mb="4"
+                      htmlFor="inDate"
+                    >
+                      Start Date
+                    </FormLabel>
+
+                    <InputGroup>
+                      <Input
+                        fontWeight="light"
+                        size="md"
+                        color={darkTheme ? "gray.300" : "naruto.black"}
+                        focusBorderColor={
+                          narutoTheme ? "naruto.yellow" : "demon.pink"
+                        }
+                        onChange={onInDateChange}
+                        variant={darkTheme ? "outline" : "filled"}
+                        id="inDate"
+                        name="inDate"
+                        type="date"
+                        datatype="date"
+                        value={editedNote.inDate}
+                      />
+                    </InputGroup>
+                  </FormControl>
+                  <FormControl mb="10" isRequired>
+                    <FormLabel
+                      fontWeight="semibold"
+                      color={darkTheme ? "white" : "naruto.black"}
+                      mb="4"
+                      htmlFor="outDate"
+                    >
+                      End Date
+                    </FormLabel>
+
+                    <InputGroup>
+                      <Input
+                        fontWeight="light"
+                        size="md"
+                        color={darkTheme ? "gray.300" : "naruto.black"}
+                        focusBorderColor={
+                          narutoTheme ? "naruto.yellow" : "demon.pink"
+                        }
+                        onChange={onOutDateChange}
+                        variant={darkTheme ? "outline" : "filled"}
+                        id="outDate"
+                        name="outDate"
+                        type="date"
+                        value={editedNote.outDate}
+                      />
+                    </InputGroup>
+                    {/* <Flatpickr
+              data-enable-time
+              value={note.outDate}
+              onChange={onOutDateChange}
+            /> */}
+                  </FormControl>
+                  <FormControl mb="10" isRequired>
+                    <FormLabel
+                      fontWeight="semibold"
+                      color={darkTheme ? "white" : "naruto.black"}
+                      mb="4"
                       htmlFor="noteDesc"
                     >
-                      Note
+                      Event
                     </FormLabel>
                     <InputGroup>
                       <Textarea
@@ -388,7 +513,7 @@ const NoteItemDetail = () => {
                         name="noteDescription"
                         id="noteDescription"
                         variant={darkTheme ? "outline" : "filled"}
-                        placeholder="Buy ingredients, then..."
+                        placeholder="This event is ..."
                         onKeyUpCapture={onKeyDescCapture}
                         onBlur={() => setIsValidNoteDesc(null)}
                         rows={5}
@@ -446,6 +571,8 @@ const NoteItemDetail = () => {
                           setEditedNote({
                             title: "",
                             noteDescription: "",
+                            inDate: "",
+                            outDate: "",
                           })
                         }
                         mt="5"
@@ -494,7 +621,7 @@ const NoteItemDetail = () => {
               <AlertDialogHeader
                 color={narutoTheme ? "naruto.red" : "demon.green"}
               >
-                Delete Note?
+                Delete Event?
               </AlertDialogHeader>
 
               <AlertDialogCloseButton />

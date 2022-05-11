@@ -2,7 +2,7 @@ import { useToast } from "@chakra-ui/react";
 import { createContext, useState } from "react";
 
 const NoteContext = createContext();
-const host = "https://noteme-in.herokuapp.com";
+const host = "http://localhost:4000";
 
 export const NoteProvider = ({ children }) => {
   const toast = useToast();
@@ -44,7 +44,7 @@ export const NoteProvider = ({ children }) => {
         setNotes([...notes, responseJson.note]);
         toast({
           title: "Success",
-          description: "Note created",
+          description: "Event created",
           status: "success",
           duration: 2000,
           position: "top",
@@ -141,7 +141,7 @@ export const NoteProvider = ({ children }) => {
         getAllNotes();
         toast({
           title: "Success",
-          description: "Note deleted",
+          description: "Event deleted",
           status: "success",
           duration: 2000,
           position: "top",
@@ -177,7 +177,7 @@ export const NoteProvider = ({ children }) => {
         if (responseJson.note.isPinned === true) {
           toast({
             title: "Success",
-            description: "Note pinned",
+            description: "Event pinned",
             status: "success",
             duration: 2000,
             position: "top",
@@ -186,7 +186,7 @@ export const NoteProvider = ({ children }) => {
         } else {
           toast({
             title: "Success",
-            description: "Note unpinned",
+            description: "Event unpinned",
             status: "success",
             duration: 2000,
             position: "top",

@@ -25,7 +25,7 @@ import ThemeContext from "../../context/theme.context";
 import NoteContext from "../../context/note.context";
 
 const Notes = () => {
-  document.title = "noteme - Notes";
+  document.title = "evme - Events";
   const themeContext = useContext(ThemeContext);
   const {
     nltheme,
@@ -65,7 +65,9 @@ const Notes = () => {
         notes.filter(
           (note) =>
             note.title.toLowerCase().includes(value.toLowerCase()) ||
-            note.noteDescription.toLowerCase().includes(value.toLowerCase())
+            note.noteDescription.toLowerCase().includes(value.toLowerCase()) ||
+            note.inDate.toLowerCase().includes(value.toLowerCase()) ||
+            note.outDate.toLowerCase().includes(value.toLowerCase())
         )
       );
       setHighlighted(value);
@@ -138,7 +140,7 @@ const Notes = () => {
                     narutoTheme ? "naruto.yellow" : "demon.pink"
                   }
                   color={darkTheme ? "gray.300" : "naruto.black"}
-                  placeholder="Search your notes"
+                  placeholder="Search your events"
                   // value={searchItem}
                   // onChange={handleSearch}
                   onKeyUpCapture={onSearchKeyCapture}
@@ -324,7 +326,7 @@ const Notes = () => {
                           ALL
                         </Heading>
                       </span>{" "}
-                      NOTES
+                      EVENTS
                     </Heading>
                     <Divider />
                   </Box>
@@ -378,7 +380,7 @@ const Notes = () => {
               Oops!
             </AlertTitle>
             <AlertDescription maxWidth="md">
-              It seems that you don't have any notes. Add notes and you can
+              It seems that you don't have any events. Add events and you can
               always find them here.
             </AlertDescription>
           </Alert>

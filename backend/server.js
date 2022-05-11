@@ -7,9 +7,10 @@ const path = require("path");
 const connectDB = require("./config/db");
 
 // configure dotenv
-dotenv.config({
-  path: "backend/config/config.env",
-});
+dotenv.config();
+// {
+//   path: "backend/config/config.env",
+// }
 
 // configure mongoose database
 connectDB();

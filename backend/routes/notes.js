@@ -40,12 +40,14 @@ router.post(
       return res.status(400).json({ success, errors: errors.array() });
     }
 
-    const { title, noteDescription } = req.body;
+    const { title, noteDescription, inDate, outDate } = req.body;
 
     try {
       const note = await new Note({
         title,
         noteDescription,
+        inDate,
+        outDate,
         user: req.user.id,
       });
       success = true;
@@ -145,7 +147,7 @@ router.put(
       return res.status(400).json({ success, errors: errors.array() });
     }
 
-    const { title, noteDescription } = req.body;
+    const { title, noteDescription, inDate, outDate } = req.body;
 
     try {
       const note = await Note.findById(req.params.id);
@@ -157,6 +159,9 @@ router.put(
         } else {
           note.title = title;
           note.noteDescription = noteDescription;
+          note.inDate = inDate;
+          note.outDate = outDate;
+
           success = true;
           await note.save();
           res.status(200).json({ success, note });

@@ -33,7 +33,7 @@ const Signup = () => {
   const userContext = useContext(UserContext);
   const { registerUser } = userContext;
 
-  document.title = "noteme - Signup";
+  document.title = "evme - Signup";
 
   const themeContext = useContext(ThemeContext);
 

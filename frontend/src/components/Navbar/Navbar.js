@@ -117,7 +117,7 @@ const Navbar = () => {
                   as="h1"
                   size="lg"
                 >
-                  note
+                  ev
                 </Heading>
               </span>
               me
@@ -372,7 +372,7 @@ const Navbar = () => {
                   </MenuGroup>
                 </MenuList>
               </Menu>
-              <Link to="/notes">
+              <Link to="/events">
                 <Button
                   fontWeight="medium"
                   mr="3"
@@ -388,7 +388,7 @@ const Navbar = () => {
                   }}
                   leftIcon={<MdSpeakerNotes />}
                 >
-                  Notes
+                  Events
                 </Button>
               </Link>
 
@@ -533,7 +533,7 @@ const Navbar = () => {
                     as="h1"
                     size="xl"
                   >
-                    note
+                    ev
                   </Heading>
                 </span>
                 me
@@ -541,7 +541,7 @@ const Navbar = () => {
             </Link>
           </DrawerHeader>
           <DrawerBody>
-            <Link to="/notes" onClick={() => closeDrawer()}>
+            <Link to="/events" onClick={() => closeDrawer()}>
               <Button
                 fontWeight="medium"
                 ml="5"
@@ -559,7 +559,7 @@ const Navbar = () => {
                 }}
                 leftIcon={<MdSpeakerNotes />}
               >
-                Notes
+                Events
               </Button>
             </Link>
             <Menu autoSelect={false}>

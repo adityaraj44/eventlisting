@@ -32,12 +32,12 @@ const App = () => {
                   </PrivateRoute>
                 </Switch>
                 <Switch>
-                  <PrivateRoute exact path="/notes">
+                  <PrivateRoute exact path="/events">
                     <Notes />
                   </PrivateRoute>
                 </Switch>
                 <Switch>
-                  <PrivateRoute exact path="/notes/:id">
+                  <PrivateRoute exact path="/events/:id">
                     <NoteItemDetail />
                   </PrivateRoute>
                 </Switch>

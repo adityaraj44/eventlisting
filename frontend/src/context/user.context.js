@@ -2,7 +2,7 @@ import { useToast } from "@chakra-ui/react";
 import { createContext, useState } from "react";
 
 const UserContext = createContext();
-const host = "https://noteme-in.herokuapp.com";
+const host = "http://localhost:4000";
 
 export const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);

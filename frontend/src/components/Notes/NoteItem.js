@@ -106,7 +106,7 @@ const NoteItem = ({ note, highlighted }) => {
           <Divider />
           <Box mt="3" textAlign="end">
             <Tooltip
-              label={note.isPinned ? "Unpin note" : "Pin note"}
+              label={note.isPinned ? "Unpin event" : "Pin event"}
               fontSize="md"
             >
               <IconButton
@@ -152,7 +152,7 @@ const NoteItem = ({ note, highlighted }) => {
                 }}
               />
             </Tooltip>
-            <Link to={`/notes/${note._id}`}>
+            <Link to={`/events/${note._id}`}>
               <Button
                 variant="solid"
                 size="sm"

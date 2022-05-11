@@ -32,7 +32,7 @@ const Login = () => {
   const history = useHistory();
   const userContext = useContext(UserContext);
   const { loginUser } = userContext;
-  document.title = "noteme - Login";
+  document.title = "evme - Login";
   const themeContext = useContext(ThemeContext);
   const {
     nltheme,
@@ -112,7 +112,7 @@ const Login = () => {
       await loginUser(credentials);
       setIsLoading(false);
       if (localStorage.getItem("token")) {
-        history.push("/notes");
+        history.push("/events");
       }
     }
   };
